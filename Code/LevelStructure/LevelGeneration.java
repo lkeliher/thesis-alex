@@ -9,7 +9,7 @@ public class LevelGeneration {
 	/**
 	 * Generates the weighted levels of graphMatrix rooted at x.
 	 *
-	 * @return The oregered list of levels, where each level is ordered by node degree. Note that the first (0th) index of each level is reserved for the weight sum of that level.
+	 * @return The ordered list of levels, where each level is ordered by node degree, and the list of weight sums corresponding with those levels.
 	 */
 	public WeightedLevels generateLevels(int x, int[][] graphMatrix, ArrayList<ArrayList<Integer>> adjList) {
 		int n = graphMatrix.length;
