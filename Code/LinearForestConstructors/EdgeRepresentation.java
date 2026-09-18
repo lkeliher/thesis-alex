@@ -1,6 +1,6 @@
 package LinearForestConstructors;
 
-class EdgeRepresentation implements Comparable<EdgeRepresentation> {
+public class EdgeRepresentation implements Comparable<EdgeRepresentation> {
 	private int n1;
 	private int n2;
 	private int weight;
