@@ -12,7 +12,7 @@ public class GraphRepresentations {
 	}
 
 	public int[][] getMatrix() {
-		return graphMatrux;
+		return graphMatrix;
 	}
 
 	public ArrayList<ArrayList<Integer>> getAdjList() {
