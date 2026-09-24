@@ -62,7 +62,8 @@ public class ThresholdLinearForest extends LinearForestConstructor {
 			int large = -1;
 			int next = -1;
 			for(Integer i : adjList.get(a)) {
-				if(graphMatrix[i][a] > large) {
+				if (seen.contains(i)) {continue;}
+				if (graphMatrix[i][a] > large) {
 					next = i;
 					large = graphMatrix[i][a];
 				}
@@ -82,6 +83,7 @@ public class ThresholdLinearForest extends LinearForestConstructor {
 			int large = -1;
 			int next = -1;
 			for(Integer i : adjList.get(b)) {
+				if (seen.contains(i)) {continue;}
 				if(graphMatrix[i][b] > large) {
 					next = i;
 					large = graphMatrix[i][b];

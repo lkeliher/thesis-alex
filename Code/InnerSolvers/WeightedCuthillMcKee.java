@@ -25,4 +25,18 @@ public class WeightedCuthillMcKee extends InnerSolver {
 		}
 		return labels;
 	}
+
+	public ArrayList<Integer> getOrdering(int[] labels) {
+    	ArrayList<Integer> ordering = new ArrayList<>();
+
+    	for (int i = 0; i < labels.length; i++) {
+    	    ordering.add(i);
+    	}
+
+    	ordering.sort((a, b) ->
+    	    Integer.compare(labels[a], labels[b])
+    	);
+
+    	return ordering;
+	}
 }
