@@ -35,7 +35,9 @@ public class EdgeWeightMultiplicative extends EdgeWeightContraction {
 
         // Build the contracted weighted graph.
         int[][] newGraphMatrix = new int[newNodeCount][newNodeCount];
+        int[] supernode = new int[newNodeCount];
 
+        int supernodei = 0;
 		// Recompute edges to contracted nodes.
 		for(ArrayList<Integer> path : paths) {
 			int bforward = 0;
@@ -44,6 +46,7 @@ public class EdgeWeightMultiplicative extends EdgeWeightContraction {
 			ArrayList<ArrayList<Integer>> backwardEdges = new ArrayList<ArrayList<Integer>>();
 			for(int i = 0; i < path.size(); i++) {
 				int a = path.get(i);
+				supernode[oldToNew[a]] = supernodei++;
 				for(int ii = 0; ii < adjList.get(a).size(); ii++) {
 					int b = adjList.get(a).get(ii);
 					// (i, j, w)
@@ -123,6 +126,6 @@ public class EdgeWeightMultiplicative extends EdgeWeightContraction {
 		    }
 		}
 
-		return new GraphRepresentations(newGraphMatrix, newAdjList);
+		return new GraphRepresentations(newGraphMatrix, newAdjList, supernode);
 	}
 }
