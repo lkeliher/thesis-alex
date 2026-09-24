@@ -1,4 +1,4 @@
-package GL79Strategies;
+package PseudoperipheralNodeFinders.GL79Strategies;
 
 import java.util.ArrayList;
 

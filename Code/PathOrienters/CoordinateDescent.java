@@ -9,7 +9,6 @@ import NodeContractions.*;
 import PseudoperipheralNodeFinders.*;
 
 public class CoordinateDescent {
-
     private final EdgeWeightContraction contraction;
     private final WeightedCuthillMcKee solver;
 
@@ -122,7 +121,7 @@ public class CoordinateDescent {
     }
 
 
-    private long calculateBandwidth(int[][] graphMatrix, int[] labels) {
+    public long calculateBandwidth(int[][] graphMatrix, int[] labels) {
         long bandwidth = 0;
         int n = graphMatrix.length;
 

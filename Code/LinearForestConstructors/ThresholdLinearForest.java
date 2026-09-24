@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.HashSet;
 import java.util.LinkedList;
-import ThresholdCalculators.*;
+import java.util.Collections;
+import LinearForestConstructors.ThresholdCalculators.*;
 
 public class ThresholdLinearForest extends LinearForestConstructor {
 	public ArrayList<ArrayList<Integer>> generateLinearForest(int[][] graphMatrix, ArrayList<ArrayList<Integer>> adjList) {
 		int n = graphMatrix.length;
 		int index = 0;
 
-		PriorityQueue<EdgeRepresentation> pq = new PriorityQueue<EdgeRepresentation>();
+		PriorityQueue<EdgeRepresentation> pq = new PriorityQueue<EdgeRepresentation>(Collections.reverseOrder());
 
 		for(int i = 0; i < adjList.size(); i++) {
 			ArrayList<Integer> curAdj = adjList.get(i);
@@ -35,15 +36,25 @@ public class ThresholdLinearForest extends LinearForestConstructor {
 
 		ThresholdCalculator threshCalc = new StatisticalThreshold();
 		int threshold = threshCalc.getThreshold(graphMatrix, adjList, edgesSorted);
+		//System.out.println(threshold);
 
 		ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>();
 		HashSet<Integer> seen = new HashSet<Integer>();
-		while(edgesSorted.get(index).getWeight() >= threshold) {
+		while(index < edgesSorted.size() && edgesSorted.get(index).getWeight() >= threshold) {
 			EdgeRepresentation curEdge = edgesSorted.get(index++);
 			if(!(seen.contains(curEdge.getNode1()) || seen.contains(curEdge.getNode2()))) {
 				seen.add(curEdge.getNode1());
 				seen.add(curEdge.getNode2());
 				paths.add(makePath(curEdge, threshold, seen, adjList, graphMatrix));
+			}
+		}
+
+		// Add the remaining single nodes.
+		for (int i = 0; i < n; i++) {
+			if(!seen.contains(i)) {
+				ArrayList<Integer> s = new ArrayList<Integer>();
+				s.add(i);
+				paths.add(s);
 			}
 		}
 		return paths;

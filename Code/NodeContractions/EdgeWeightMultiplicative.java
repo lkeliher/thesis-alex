@@ -7,14 +7,14 @@ public class EdgeWeightMultiplicative extends EdgeWeightContraction {
 	* The coordinate-descent version should use the overload below.
 	*/
 	@Override
-	public GraphRepresentations contract( int[][] graphMatrix, ArrayList<ArrayList<Integer>> adjList, ArrayList<ArrayList<Integer>> paths) {
+	public GraphRepresentations contract(int[][] graphMatrix, ArrayList<ArrayList<Integer>> adjList, ArrayList<ArrayList<Integer>> paths) {
 		boolean[] orientation = new boolean[paths.size()];
 		// false = original path orientation
 		return contract(graphMatrix, adjList, paths, orientation);
 	}
 
 	/** Contract the graph using the supplied orientation for each path.
-	*  orientation[i] == false: * paths.get(i) is used in its original direction. 
+	* orientation[i] == false: * paths.get(i) is used in its original direction. 
 	* orientation[i] == true: * paths.get(i) is reversed. 
 	* The contracted edge weight is: 
 	* originalWeight * distanceFromChosenEndpoint

@@ -1,4 +1,4 @@
-package ThresholdCalculators;
+package LinearForestConstructors.ThresholdCalculators;
 
 import java.util.ArrayList;
 import LinearForestConstructors.EdgeRepresentation;

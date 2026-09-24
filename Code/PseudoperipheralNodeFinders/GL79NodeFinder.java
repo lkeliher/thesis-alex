@@ -2,7 +2,7 @@ package PseudoperipheralNodeFinders;
 
 import java.util.ArrayList;
 import LevelStructure.*;
-import GL79Strategies.*;
+import PseudoperipheralNodeFinders.GL79Strategies.*;
 
 public class GL79NodeFinder extends PseudoperipheralNodeFinder {
 	public GL79NodeFinder() {};

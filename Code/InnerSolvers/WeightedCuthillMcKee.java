@@ -18,7 +18,7 @@ public class WeightedCuthillMcKee extends InnerSolver {
 		int realIndex = 0;
 		for(int i = 0; i < n; i++) {
 			labels[curLevel.get(realIndex++)] = i;
-			if(realIndex >= curLevel.size()) {
+			if(levelIndex < levels.getNumLevels() && realIndex >= curLevel.size()) {
 				realIndex = 0;
 				curLevel = levels.getLevel(levelIndex++);
 			}

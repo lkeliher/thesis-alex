@@ -13,51 +13,68 @@ public class LevelGeneration {
 	 */
 	public WeightedLevels generateLevels(int x, int[][] graphMatrix, ArrayList<ArrayList<Integer>> adjList) {
 		int n = graphMatrix.length;
-		double[] prevWeightSum = new double[n];
-		PriorityQueue<NodeLevelDegree> pq = new PriorityQueue<NodeLevelDegree>();
-		PriorityQueue<NodeLevelDegree> iterationPq = new PriorityQueue<NodeLevelDegree>();
+		double[] distance = new double[n];
+		boolean[] visited = new boolean[n];
 
-		int cur = x;
-		int i = 0;
-		while(i < n) {
-			ArrayList<Integer> curAdj = adjList.get(cur);
-			
-			for(Integer ii : curAdj) {
-				if (prevWeightSum[ii] == 0 && ii != x) {
-					NodeLevelDegree nodeWeightSumPair = new NodeLevelDegree(ii, prevWeightSum[cur] + 1.0 /(double) graphMatrix[cur][ii], adjList.get(ii).size());
-					//prevWeightSum[ii] = prevWeightSum[cur] + 1.0/(double)graphMatrix[cur][ii];
-					iterationPq.add(nodeWeightSumPair);
+		for (int i = 0; i < n; i++) {
+			distance[i] = Double.POSITIVE_INFINITY;
+		}
+
+		PriorityQueue<NodeLevelDegree> pq = new PriorityQueue<>();
+		distance[x] = 0.0;
+
+		pq.add(new NodeLevelDegree(x, 0.0, adjList.get(x).size()));
+		ArrayList<NodeLevelDegree> nodes = new ArrayList<>();
+
+		while (!pq.isEmpty()) {
+			NodeLevelDegree current = pq.poll();
+
+			int u = current.getNode();
+
+			if (visited[u]) {
+				continue;
+			}
+
+			visited[u] = true;
+			nodes.add(current);
+
+			for (Integer v : adjList.get(u)) {
+
+				if (visited[v]) {
+					continue;
+				}
+
+				double edgeCost =
+					1.0 / (double) graphMatrix[u][v];
+
+				double newDistance =
+					distance[u] + edgeCost;
+
+				if (newDistance < distance[v]) {
+					distance[v] = newDistance;
+
+					pq.add(new NodeLevelDegree(
+						v,
+						newDistance,
+						adjList.get(v).size()
+					));
 				}
 			}
-			NodeLevelDegree temp = iterationPq.poll();
-			while(prevWeightSum[temp.getNode()] != 0 || temp.getNode() == x) {
-				temp = iterationPq.poll();
-			}
-			prevWeightSum[temp.getNode()] = temp.getWeightSum();
-			pq.add(temp);
-			cur = temp.getNode();
-			i++;
 		}
-		NodeLevelDegree xpair = new NodeLevelDegree(x, 0, adjList.get(x).size());
-		pq.add(xpair);
 
 		WeightedLevels levels = new WeightedLevels();
-		double curLevel = 0;
-		int curNode = x;
-		double lastLevel = 0;
-		i = 0;
-		levels.addLevel(0);
-		while(!pq.isEmpty()) {
-			NodeLevelDegree curr = pq.poll();
-			curLevel = curr.getWeightSum();
-			curNode = curr.getNode();
-			if (lastLevel != curLevel) {
-				i++;
-				levels.addLevel(curLevel);
+		double lastDistance = Double.NaN;
+		for (NodeLevelDegree node : nodes) {
+			double d = node.getWeightSum();
+
+			if (Double.isNaN(lastDistance) || d != lastDistance) {
+				levels.addLevel(d);
+				lastDistance = d;
 			}
-			lastLevel = curLevel;
-			levels.addNodeToLastLevel(cur);
+
+			levels.addNodeToLastLevel(node.getNode());
 		}
+
 		return levels;
 	}
 }

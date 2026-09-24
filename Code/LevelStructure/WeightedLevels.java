@@ -22,6 +22,7 @@ public class WeightedLevels {
 	}
 
 	public ArrayList<Integer> getLevel(int i) {
+		//System.out.println(levels.get(i).toString());
 		return levels.get(i);
 	}
 
